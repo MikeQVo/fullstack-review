@@ -20,30 +20,43 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     let optionsPost = {
       method: 'POST',
-      uri: '/repos',
-      form: {
-        value: term
-      }
-    }
-
-    let optionsGet = {
-      method: 'GET',
-      uri: `/repos/${term}`
+      uri: 'http://localhost:1128/repos',
+      body: {
+        name: term
+      },
+      json: true
     }
 
     rp(optionsPost)
-      .then(() => {
-        rp(optionsGet)
-          .then((repos) => {
-            this.state.repos = repos;
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+      .then((result) => {
+        console.log(result);
       })
       .catch((err) => {
         console.log(err);
       })
+    // let optionsGet = {
+    //   method: 'GET',
+    //   uri: `https://localhost/repos/${term}`,
+    //   body: {
+    //     name: term
+    //   }
+    // }
+
+    // rp(optionsPost)
+    //   .then(() => {
+    //     rp(optionsGet)
+    //       .then((results) => {
+    //         this.setState({
+    //           repos: results
+    //         })
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
   }
 
   render () {

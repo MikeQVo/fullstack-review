@@ -13,11 +13,23 @@ module.exports = {
       {
         test : /\.jsx?/,
         include : SRC_DIR,
-        loader : 'babel-loader',      
+        loader : 'babel-loader',
         query: {
           presets: ['react', 'es2015']
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
+  },
+  resolve: {
+    extensions: ['webpack.js', '.web.js', '.js']
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   }
 };
