@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
@@ -18,45 +18,34 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    let optionsPost = {
+    rp({
       method: 'POST',
-      uri: 'http://localhost:1128/repos',
+      uri: 'http://127.0.0.1:1128/repos',
       body: {
         name: term
       },
       json: true
-    }
-
-    rp(optionsPost)
-      .then((result) => {
-        console.log(result);
+    })
+    .then((results) => {
+      console.log('Successful Post', results);
+      return (rp({
+        method: 'GET',
+        uri: `http://127.0.0.1:1128/repos`,
+        json: true
+      })
+      .then((results) => {
+        console.log('Successful Get', results);
+        this.setState({
+          repos: results
+        })
       })
       .catch((err) => {
         console.log(err);
-      })
-    // let optionsGet = {
-    //   method: 'GET',
-    //   uri: `https://localhost/repos/${term}`,
-    //   body: {
-    //     name: term
-    //   }
-    // }
-
-    // rp(optionsPost)
-    //   .then(() => {
-    //     rp(optionsGet)
-    //       .then((results) => {
-    //         this.setState({
-    //           repos: results
-    //         })
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       })
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
+      }))
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render () {

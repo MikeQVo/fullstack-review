@@ -6,14 +6,14 @@ const mongo = require('../database/index');
 let getReposByUsername = (username) => {
   let options = {
     method: 'GET',
-    url: `https://api.github.com/users/${username}/repos`,
-    type: 'owner',
-    sort: 'updated',
+    url: `https://api.github.com/users/${username}/repos?per_page=25`,
     headers: {
       'User-Agent': 'request-promise',
       'Authorization': `token ${config.TOKEN}`,
       'Accept': 'application/vnd.github.v3+json',
     },
+    type: 'owner',
+    sort: 'updated',
     json: true
   };
 

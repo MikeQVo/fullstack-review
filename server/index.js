@@ -10,20 +10,14 @@ app.use(bodyParser.json());
 
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
   res.sendStatus(200);
-  console.log(req.body);
   get.getReposByUsername(req.body.name);
   res.end();
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-  mongo.Repo.find({ name: req.body.name })
+  mongo.Repo
+    .find()
     .sort({ date: -1 })
     .then(repos => res.json(repos))
 });
